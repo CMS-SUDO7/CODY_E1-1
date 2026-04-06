@@ -25,14 +25,74 @@
 - [x] Git 설정 + VSCode GitHub 연동
 
 4. 💻 터미널 조작 로그
+here@DESKTOP-T6PLU4B:~$ pwd
+
+/home/here
+
+here@DESKTOP-T6PLU4B:~$ ls -a
+
+.  ..  .aws  .azure  .bash_history  .bash_logout  .bashrc  .cache  .docker  .local  .motd_shown  .profile  .sudo_as_admin_successful
+
+here@DESKTOP-T6PLU4B:~$ touch test.txt
+
+here@DESKTOP-T6PLU4B:~$ mkdir testdir
+
+here@DESKTOP-T6PLU4B:~$ cp test.txt copy.txt
+
+here@DESKTOP-T6PLU4B:~$ mv copy.txt moved.txt
+
+here@DESKTOP-T6PLU4B:~$ rm moved.txt
+
+here@DESKTOP-T6PLU4B:~$ cat test.txt
+
 <img width="1516" height="648" alt="터미널 조작 로그" src="https://github.com/user-attachments/assets/cbca955a-dddb-4f9b-bb14-39ce241491a0" />
 5. 🔐 권한 실습
+here@DESKTOP-T6PLU4B:~$ ls -l test.txt
+
+-rw-r--r-- 1 here here 0 Apr  7 02:05 test.txt
+
+here@DESKTOP-T6PLU4B:~$ chmod 777 test.txt
+
+here@DESKTOP-T6PLU4B:~$ ls -l test.txt
+
+-rwxrwxrwx 1 here here 0 Apr  7 02:05 test.txt
+
 <img width="1152" height="648" alt="권한변경 실습" src="https://github.com/user-attachments/assets/5985b2ef-cce8-4b0f-9b25-079c0621679a" />
 6. 🐳 Docker 설치 및 점검
+
+here@DESKTOP-T6PLU4B:~$ docker --version
+
+Docker version 29.3.1, build c2be9cc
+
+here@DESKTOP-T6PLU4B:~$ docker info
+
 <img width="1508" height="808" alt="docker 설치 및 점검" src="https://github.com/user-attachments/assets/c37a57e2-5777-4f12-8664-14df75ac3247" />
+
 7. 🐳 Docker 기본 운용 명령 실행
+
+docker pull nginx
+
+docker images
+
+docker run -d -p 8080:80 nginx
+
+docker ps
+
+docker ps -a
+
+docker stop ca3aaf27639
+
+docker run hello-world
+
 <img width="1541" height="881" alt="docker 기본 운영 명령 실행" src="https://github.com/user-attachments/assets/042e0510-1915-470e-9724-8ba3274ffc38" />
 8. 🐳 컨테이너 실습 (Ubuntu)
+
+docker run -it ubuntu
+
+echo "Hello Docker"
+
+exit
+
 <img width="1541" height="881" alt="hello world 와 docker ubuntu" src="https://github.com/user-attachments/assets/3f1a1df0-de48-40ac-b8f4-5f5603293112" />
 
 ## attach vs exec 차이
@@ -78,6 +138,33 @@ nginx
 정적 웹 페이지 제공
 
 index.html 변경
+
+<!DOCTYPE html>
+
+<html>
+  
+<head>
+  
+  <title>My Docker Page</title>
+  
+</head>
+
+<body>
+  
+  <h1>Hello, Custom Docker!</h1>
+  
+  <p>This is my custom NGINX container.</p>
+  
+</body>
+
+</html>
+
+dockerfile
+
+FROM nginx:latest
+
+COPY index.html /usr/share/nginx/html/index.html
+
 <img width="1541" height="881" alt="dockerfile 커스텀 이미지1" src="https://github.com/user-attachments/assets/4ad4730c-db21-4134-a2c1-3e78ddfd2201" />
 <img width="1541" height="881" alt="dockerfile 커스텀 이미지2" src="https://github.com/user-attachments/assets/593515ac-d9c2-4e2c-9dc0-627a925e2e1b" />
 nginx 이미지를 기반으로 커스텀 이미지를 제작하였다.
@@ -136,3 +223,156 @@ git remote add origin https://github.com/CMS-SUDo7/my-nginx.git
 git push -u origin main
 
 <img width="1541" height="881" alt="github 연동" src="https://github.com/user-attachments/assets/ecbcddfe-44db-46ff-bfb6-03578cd14586" />
+
+### ⚠️트러블슈팅 (커스텀 이미지 적용 실패 문제)
+
+#### 1. 문제
+
+커스텀 Docker 이미지를 기반으로 컨테이너를 실행한 후
+http://localhost:8080 에 접속하였으나,
+사용자가 작성한 HTML 페이지가 아닌 기본 "Welcome to nginx" 화면이 출력되었다.
+
+---
+
+#### 2. 원인 가설
+
+해당 문제는 다음과 같은 원인으로 발생했을 가능성이 있다고 판단하였다.
+
+* 기존에 실행 중이던 nginx 컨테이너가 동일한 포트(8080)를 점유하고 있을 가능성
+* 커스텀 이미지가 아닌 기본 nginx 이미지가 실행되었을 가능성
+* Dockerfile 변경 사항이 이미지에 반영되지 않았을 가능성
+
+---
+
+#### 3. 확인 과정
+
+1. 실행 중인 컨테이너 확인
+
+```bash
+docker ps
+```
+
+→ 확인 결과, 기존 nginx 이미지 기반 컨테이너가 실행 중이며 8080 포트를 사용 중임을 확인하였다.
+
+---
+
+2. 이미지 목록 확인
+
+```bash
+docker images
+```
+
+→ my-nginx 이미지가 정상적으로 생성되어 있음을 확인하였다.
+
+---
+
+#### 4. 해결 및 대안
+
+1. 기존 컨테이너 종료
+
+```bash
+docker stop [컨테이너 ID]
+```
+
+→ 기존 nginx 컨테이너를 종료하여 포트 충돌 문제를 해결하였다.
+
+---
+
+2. 커스텀 이미지 기반 컨테이너 재실행
+
+```bash
+docker run -d -p 8080:80 my-nginx
+```
+
+→ 이후 브라우저 접속 시 사용자 정의 HTML 페이지가 정상 출력됨을 확인하였다.
+
+---
+
+3. 대안 방법
+
+* 포트 충돌을 피하기 위해 다른 포트를 사용하는 방법
+
+```bash
+docker run -d -p 8081:80 my-nginx
+```
+
+* 캐시 문제를 방지하기 위해 이미지 재빌드
+
+```bash
+docker build -t my-nginx . --no-cache
+```
+
+---
+
+#### 5. 결론
+
+본 문제는 기존 컨테이너의 포트 점유로 인해 발생한 것으로 확인되었으며,
+컨테이너 관리 및 포트 사용 상태 확인의 중요성을 이해할 수 있었다.
+
+### ⚠️트러블슈팅 (GitHub 인증 오류 해결)
+
+#### 문제  
+git push 수행 시 "Password authentication is not supported" 오류 발생
+
+#### 원인 가설  
+GitHub에서 보안 정책 변경으로 인해 비밀번호 인증이 차단된 것으로 판단
+
+#### 확인  
+오류 메시지를 통해 토큰 기반 인증 필요함을 확인
+
+#### 해결  
+GitHub에서 Personal Access Token을 생성한 후,
+비밀번호 입력 대신 토큰을 사용하여 인증을 수행
+
+#### 결론  
+GitHub는 보안 강화를 위해 비밀번호 대신 토큰 기반 인증을 사용함을 확인하였다.
+
+
+⚠️ 트러블슈팅 (WSL chmod 문제)
+❗ 문제
+
+chmod 600 test.txt
+
+ls -l
+
+명령을 실행했지만 파일 권한이 바뀌지 않고 계속 -rwxrwxrwx 상태로 나타남
+
+🔍 원인 가설
+
+파일이 위치한 경로 /mnt/c/...는 Windows 파일 시스템(NTFS)
+
+NTFS는 Linux 방식의 chmod 권한을 완전히 지원하지 않음
+
+따라서 chmod 명령이 실행되어도 실제 권한에 반영되지 않음
+
+✅ 확인
+
+/mnt/c/... 경로에서 chmod 적용 시 권한 변화 없음 확인
+
+ls -l test.txt
+
+# 출력: -rwxrwxrwx
+
+Linux 홈 디렉토리(~/perm-test)로 이동 후 재실습
+
+mkdir ~/perm-test
+
+cd ~/perm-test
+
+touch file.txt
+
+chmod 600 file.txt
+
+ls -l file.txt
+
+# 출력: -rw-------
+
+Linux 경로에서는 chmod가 정상적으로 반영됨
+
+🛠️ 해결 / 대안
+
+권장 해결: 실습 파일을 Linux 파일 시스템 영역(예: /home)으로 이동 후 chmod 적용
+
+고급 대안: WSL 설정 변경 (/etc/wsl.conf에서 metadata 옵션 활성화) 후 재시작
+
+주의: Windows 경로(/mnt/c)에서는 chmod 권한 변경이 제한적이므로, 권한 실습은 항상 Linux 경로에서 수행
