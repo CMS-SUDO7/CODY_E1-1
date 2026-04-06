@@ -114,14 +114,25 @@ docker exec vol-test2 cat /data/test.txt
 <img width="1541" height="881" alt="증명docker 볼륨 및 영속성 검" src="https://github.com/user-attachments/assets/167b18c9-27ff-472d-a04a-b9d6bf9f18a0" />
 
 13. 🔧 Git 설정 및 GitHub 연동
-git config --global user.name "your-name"
-git config --global user.email "your-email"
+
+git config --global user.name "CMS-SUDO7"
+
+git config --global user.email "herebattle@naver.com"
+
+git config --global init.defaultBranch main
+
 git config --list
-✔️ 결과
-사용자 정보 설정 확인 완료
+
 git init
+
 git add .
-git commit -m "init project"
-git branch -M main
-git remote add origin <repo-url>
+
+git commit -m "first commit"
+
+https://github.com/CMS-SUDO7/my-nginx.git
+
+git remote add origin https://github.com/CMS-SUDo7/my-nginx.git
+
 git push -u origin main
+
+<img width="1541" height="881" alt="github 연동" src="https://github.com/user-attachments/assets/ecbcddfe-44db-46ff-bfb6-03578cd14586" />
