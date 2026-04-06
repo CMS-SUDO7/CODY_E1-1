@@ -66,3 +66,62 @@ docker exec -it 컨테이너ID bash
 | 연결 방식  | 기존 프로세스    | 새 프로세스 |
 | exit 시 | 컨테이너 종료 가능 | 종료 안됨  |
 | 사용 목적  | 디버깅        | 작업/관리  |
+
+9. 🏗️ 커스텀 이미지 제작
+
+✔️ 베이스 이미지
+
+nginx
+
+✔️ 커스터마이징 목적
+
+정적 웹 페이지 제공
+
+index.html 변경
+<img width="1541" height="881" alt="dockerfile 커스텀 이미지1" src="https://github.com/user-attachments/assets/4ad4730c-db21-4134-a2c1-3e78ddfd2201" />
+<img width="1541" height="881" alt="dockerfile 커스텀 이미지2" src="https://github.com/user-attachments/assets/593515ac-d9c2-4e2c-9dc0-627a925e2e1b" />
+nginx 이미지를 기반으로 커스텀 이미지를 제작하였다.
+
+기존 웹 서버 환경을 활용하여 정적 콘텐츠만 변경하는 방식을 선택하였다.
+
+index.html 파일을 수정하여 사용자 정의 웹 페이지 생성
+
+nginx 기본 페이지를 커스텀 페이지로 대체
+
+<img width="1541" height="881" alt="커스텀 이미지 변경 전 후" src="https://github.com/user-attachments/assets/3140b74e-7be3-4433-bfe8-a5b7e66ff9a9" />
+
+10. 🌐 포트 매핑 및 접속
+<img width="1541" height="881" alt="포트매핑 접속증거2" src="https://github.com/user-attachments/assets/2561ff71-8ca3-4b87-bb25-5424b72b48ff" />
+<img width="1541" height="881" alt="포트매핑 접속증거" src="https://github.com/user-attachments/assets/2dffe772-58b5-4645-9da7-8bc54cdf9cc0" 
+  
+11. 🔗 바인드 마운트 검증
+<img width="1541" height="881" alt="바인드 마운트 결과" src="https://github.com/user-attachments/assets/dfe6bf28-3468-4b01-a987-b8b7468ac6d2" />
+
+12. 💾 Docker 볼륨 영속성 검증
+docker volume create my-volume
+
+docker run -d -v my-volume:/data --name vol-test ubuntu
+
+docker exec vol-test bash -c "echo hello > /data/test.txt"
+
+docker rm -f vol-test
+
+docker run -d -v my-volume:/data --name vol-test2 ubuntu
+
+docker exec vol-test2 cat /data/test.txt
+✔️ 결과
+컨테이너 삭제 후에도 데이터 유지 확인
+<img width="1541" height="881" alt="증명docker 볼륨 및 영속성 검" src="https://github.com/user-attachments/assets/167b18c9-27ff-472d-a04a-b9d6bf9f18a0" />
+
+13. 🔧 Git 설정 및 GitHub 연동
+git config --global user.name "your-name"
+git config --global user.email "your-email"
+git config --list
+✔️ 결과
+사용자 정보 설정 확인 완료
+git init
+git add .
+git commit -m "init project"
+git branch -M main
+git remote add origin <repo-url>
+git push -u origin main
