@@ -25,66 +25,80 @@
 - [x] Git 설정 + VSCode GitHub 연동
 
 4. 💻 터미널 조작 로그
-here@DESKTOP-T6PLU4B:~$ pwd
 
-/home/here
+herebattle6145@c5r9s1 CODY_E1-1 % pwd 
 
-here@DESKTOP-T6PLU4B:~$ ls -a
+/Users/herebattle6145/CODY_E1-1
 
-.  ..  .aws  .azure  .bash_history  .bash_logout  .bashrc  .cache  .docker  .local  .motd_shown  .profile  .sudo_as_admin_successful
+herebattle6145@c5r9s1 CODY_E1-1 % ls -la
 
-here@DESKTOP-T6PLU4B:~$ touch test.txt
+total 24
+drwxr-xr-x   5 herebattle6145  herebattle6145   160 Apr 15 18:41 .
 
-here@DESKTOP-T6PLU4B:~$ mkdir testdir
+drwxr-x---+ 24 herebattle6145  herebattle6145   768 Apr 15 18:50 ..
 
-here@DESKTOP-T6PLU4B:~$ cp test.txt copy.txt
+drwxr-xr-x  13 herebattle6145  herebattle6145   416 Apr 15 18:41 .git
 
-here@DESKTOP-T6PLU4B:~$ mv copy.txt moved.txt
+drwxr-xr-x   3 herebattle6145  herebattle6145    96 Apr 15 18:34 practice
 
-here@DESKTOP-T6PLU4B:~$ rm moved.txt
+-rw-r--r--   1 herebattle6145  herebattle6145  9867 Apr 15 18:32 README.md
 
-here@DESKTOP-T6PLU4B:~$ cat test.txt
+herebattle6145@c5r9s1 CODY_E1-1 % touch test.txt
 
-<img width="1516" height="648" alt="터미널 조작 로그" src="https://github.com/user-attachments/assets/cbca955a-dddb-4f9b-bb14-39ce241491a0" />
+herebattle6145@c5r9s1 CODY_E1-1 % mkdir test
+
+herebattle6145@c5r9s1 CODY_E1-1 % cp test.txt copy.txt
+
+herebattle6145@c5r9s1 CODY_E1-1 % mv copy.txt move.txt
+
+herebattle6145@c5r9s1 CODY_E1-1 % rm move.txt
+
+herebattle6145@c5r9s1 CODY_E1-1 % cat test.txt
+
+<img width="1262" height="397" alt="Screenshot 2026-04-15 at 6 55 24 PM" src="https://github.com/user-attachments/assets/f5fb901f-24da-4af1-a8e9-93bdb98448aa" />
+
 5. 🔐 권한 실습
-here@DESKTOP-T6PLU4B:~$ ls -l test.txt
 
--rw-r--r-- 1 here here 0 Apr  7 02:05 test.txt
+herebattle6145@c5r9s1 CODY_E1-1 % ls -l test.txt
 
-here@DESKTOP-T6PLU4B:~$ chmod 777 test.txt
+-rw-r--r--  1 herebattle6145  herebattle6145  0 Apr 15 18:59 test.txt
 
-here@DESKTOP-T6PLU4B:~$ ls -l test.txt
+herebattle6145@c5r9s1 CODY_E1-1 % chmod 777 test.txt
 
--rwxrwxrwx 1 here here 0 Apr  7 02:05 test.txt
+herebattle6145@c5r9s1 CODY_E1-1 % ls -l test.txt
 
-<img width="1152" height="648" alt="권한변경 실습" src="https://github.com/user-attachments/assets/5985b2ef-cce8-4b0f-9b25-079c0621679a" />
+-rwxrwxrwx  1 herebattle6145  herebattle6145  0 Apr 15 18:59 test.txt
+
+<img width="1235" height="126" alt="Screenshot 2026-04-15 at 7 00 48 PM" src="https://github.com/user-attachments/assets/4b8ef1ba-b17d-45e4-90cf-de6dad8aea47" />
+
 6. 🐳 Docker 설치 및 점검
 
-here@DESKTOP-T6PLU4B:~$ docker --version
+herebattle6145@c5r9s1 CODY_E1-1 % docker version
 
-Docker version 29.3.1, build c2be9cc
+<img width="1243" height="691" alt="Screenshot 2026-04-15 at 7 03 23 PM" src="https://github.com/user-attachments/assets/061441e1-2e5f-4c79-9db3-08ced8d759cc" />
 
-here@DESKTOP-T6PLU4B:~$ docker info
 
-<img width="1508" height="808" alt="docker 설치 및 점검" src="https://github.com/user-attachments/assets/c37a57e2-5777-4f12-8664-14df75ac3247" />
+herebattle6145@c5r9s1 CODY_E1-1 % docker info
+
+<img width="1537" height="750" alt="Screenshot 2026-04-15 at 7 07 54 PM" src="https://github.com/user-attachments/assets/845744c1-784b-48b4-b906-f4558e44f264" />
+
 
 7. 🐳 Docker 기본 운용 명령 실행
 
-docker pull nginx
+docker pull hello-worldhello-world
+
+docker run hello-world
 
 docker images
-
-docker run -d -p 8080:80 nginx
 
 docker ps
 
 docker ps -a
 
+docker run -d -p 8080:80 nginx
+
 docker stop ca3aaf27639
 
-docker run hello-world
-
-<img width="1541" height="881" alt="docker 기본 운영 명령 실행" src="https://github.com/user-attachments/assets/042e0510-1915-470e-9724-8ba3274ffc38" />
 8. 🐳 컨테이너 실습 (Ubuntu)
 
 docker run -it ubuntu
