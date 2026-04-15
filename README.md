@@ -125,11 +125,26 @@ exit
 
 9. 🏗️ 커스텀 이미지 제작
 
+docker build -t my-nginx .
+
+docker run -d -p 8080:80 my-nginx
+
+http://localhost:8080
+
+
+<img width="1272" height="420" alt="Screenshot 2026-04-15 at 10 56 40 PM" src="https://github.com/user-attachments/assets/6e3f795a-029c-4ff4-8fd3-50ca5aaf8a4a" />
+
+
+<img width="577" height="172" alt="Screenshot 2026-04-15 at 10 51 16 PM" src="https://github.com/user-attachments/assets/42c28bb6-df54-453e-9512-ed1ab2d1157b" />
+
 
 10. 🌐 포트 매핑 및 접속
 
 docker run -d -p 8080:80 nginx
 
+<img width="871" height="53" alt="Screenshot 2026-04-15 at 10 58 15 PM" src="https://github.com/user-attachments/assets/0e71a6cb-e2c6-4cf4-80f6-5ca5e1f232b3" />
+
+<img width="694" height="416" alt="Screenshot 2026-04-15 at 10 58 09 PM" src="https://github.com/user-attachments/assets/5de40d9a-651d-4767-a90e-e381178ba575" />
 
 
   
@@ -169,6 +184,8 @@ hello from container
 
 12. 💾 Docker 볼륨 영속성 검증
 
+
+
 <img width="1276" height="225" alt="Screenshot 2026-04-15 at 10 05 16 PM" src="https://github.com/user-attachments/assets/46c51d79-ba7f-498b-9628-2ba6a17b23ec" />
 
 
@@ -193,6 +210,10 @@ git init
 
 git add .
 
+<img width="1279" height="566" alt="Screenshot 2026-04-15 at 10 21 40 PM" src="https://github.com/user-attachments/assets/ab35beb2-efe4-4f17-8449-a75dbe5d5230" />
+
+
+<img width="534" height="270" alt="Screenshot 2026-04-15 at 10 35 19 PM" src="https://github.com/user-attachments/assets/38f8490f-4c78-48c2-b67b-e317c3d78bf2" />
 
 
 ### ⚠️트러블슈팅 (커스텀 이미지 적용 실패 문제)
@@ -267,83 +288,9 @@ docker run -d -p 8080:80 my-nginx
 docker run -d -p 8081:80 my-nginx
 ```
 
-* 캐시 문제를 방지하기 위해 이미지 재빌드
-
-```bash
-docker build -t my-nginx . --no-cache
-```
-
 ---
 
 #### 5. 결론
 
 본 문제는 기존 컨테이너의 포트 점유로 인해 발생한 것으로 확인되었으며,
 컨테이너 관리 및 포트 사용 상태 확인의 중요성을 이해할 수 있었다.
-
-### ⚠️트러블슈팅 (GitHub 인증 오류 해결)
-
-#### 문제  
-git push 수행 시 "Password authentication is not supported" 오류 발생
-
-#### 원인 가설  
-GitHub에서 보안 정책 변경으로 인해 비밀번호 인증이 차단된 것으로 판단
-
-#### 확인  
-오류 메시지를 통해 토큰 기반 인증 필요함을 확인
-
-#### 해결  
-GitHub에서 Personal Access Token을 생성한 후,
-비밀번호 입력 대신 토큰을 사용하여 인증을 수행
-
-#### 결론  
-GitHub는 보안 강화를 위해 비밀번호 대신 토큰 기반 인증을 사용함을 확인하였다.
-
-
-⚠️ 트러블슈팅 (WSL chmod 문제)
-❗ 문제
-
-chmod 600 test.txt
-
-ls -l
-
-명령을 실행했지만 파일 권한이 바뀌지 않고 계속 -rwxrwxrwx 상태로 나타남
-
-🔍 원인 가설
-
-파일이 위치한 경로 /mnt/c/...는 Windows 파일 시스템(NTFS)
-
-NTFS는 Linux 방식의 chmod 권한을 완전히 지원하지 않음
-
-따라서 chmod 명령이 실행되어도 실제 권한에 반영되지 않음
-
-✅ 확인
-
-/mnt/c/... 경로에서 chmod 적용 시 권한 변화 없음 확인
-
-ls -l test.txt
-
-# 출력: -rwxrwxrwx
-
-Linux 홈 디렉토리(~/perm-test)로 이동 후 재실습
-
-mkdir ~/perm-test
-
-cd ~/perm-test
-
-touch file.txt
-
-chmod 600 file.txt
-
-ls -l file.txt
-
-# 출력: -rw-------
-
-Linux 경로에서는 chmod가 정상적으로 반영됨
-
-🛠️ 해결 / 대안
-
-권장 해결: 실습 파일을 Linux 파일 시스템 영역(예: /home)으로 이동 후 chmod 적용
-
-고급 대안: WSL 설정 변경 (/etc/wsl.conf에서 metadata 옵션 활성화) 후 재시작
-
-주의: Windows 경로(/mnt/c)에서는 chmod 권한 변경이 제한적이므로, 권한 실습은 항상 Linux 경로에서 수행
