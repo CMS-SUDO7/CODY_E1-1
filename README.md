@@ -89,130 +89,95 @@ docker pull hello-worldhello-world
 
 docker run hello-world
 
+<img width="1261" height="286" alt="Screenshot 2026-04-15 at 8 15 01 PM" src="https://github.com/user-attachments/assets/9989165d-90be-45f1-9f9c-b4cf803a0387" />
+
+
 docker images
 
 docker ps
 
 docker ps -a
 
-docker run -d -p 8080:80 nginx
+<img width="1272" height="273" alt="Screenshot 2026-04-15 at 8 15 39 PM" src="https://github.com/user-attachments/assets/cb4a9751-edfb-488c-92fc-0973ea92726c" />
 
-docker stop ca3aaf27639
+dockerfile로 build 실행+결과
+
+docker build -t ubuntu2 .
+
+docker run ubuntu2
+
+<img width="1269" height="420" alt="Screenshot 2026-04-15 at 9 36 41 PM" src="https://github.com/user-attachments/assets/7e02aaa4-7767-4201-9692-7676c4f6cc6c" />
+
+
 
 8. 🐳 컨테이너 실습 (Ubuntu)
 
 docker run -it ubuntu
 
-echo "Hello Docker"
+echo "Hello"
+
+ls
 
 exit
 
-<img width="1541" height="881" alt="hello world 와 docker ubuntu" src="https://github.com/user-attachments/assets/3f1a1df0-de48-40ac-b8f4-5f5603293112" />
+<img width="1264" height="193" alt="Screenshot 2026-04-15 at 9 20 15 PM" src="https://github.com/user-attachments/assets/f2d6721c-cc4d-4091-949c-0264abf2807a" />
 
-## attach vs exec 차이
-
-## attach
-
-docker attach 컨테이너ID
-
-특징
-
-기존 컨테이너의 표준 입력/출력에 직접 연결
-
-원래 실행 중이던 프로세스에 붙음
-
-exit 하면 컨테이너 종료될 수 있음
-
-## exec
-
-docker exec -it 컨테이너ID bash
-
-특징
-
-새로운 쉘을 추가로 실행
-
-기존 컨테이너는 계속 살아 있음
-
-안전하게 작업 가능
-
-| 항목     | attach     | exec   |
-| ------ | ---------- | ------ |
-| 연결 방식  | 기존 프로세스    | 새 프로세스 |
-| exit 시 | 컨테이너 종료 가능 | 종료 안됨  |
-| 사용 목적  | 디버깅        | 작업/관리  |
 
 9. 🏗️ 커스텀 이미지 제작
 
-✔️ 베이스 이미지
-
-nginx
-
-✔️ 커스터마이징 목적
-
-정적 웹 페이지 제공
-
-index.html 변경
-
-<!DOCTYPE html>
-
-<html>
-  
-<head>
-  
-  <title>My Docker Page</title>
-  
-</head>
-
-<body>
-  
-  <h1>Hello, Custom Docker!</h1>
-  
-  <p>This is my custom NGINX container.</p>
-  
-</body>
-
-</html>
-
-dockerfile
-
-FROM nginx:latest
-
-COPY index.html /usr/share/nginx/html/index.html
-
-<img width="1541" height="881" alt="dockerfile 커스텀 이미지1" src="https://github.com/user-attachments/assets/4ad4730c-db21-4134-a2c1-3e78ddfd2201" />
-<img width="1541" height="881" alt="dockerfile 커스텀 이미지2" src="https://github.com/user-attachments/assets/593515ac-d9c2-4e2c-9dc0-627a925e2e1b" />
-nginx 이미지를 기반으로 커스텀 이미지를 제작하였다.
-
-기존 웹 서버 환경을 활용하여 정적 콘텐츠만 변경하는 방식을 선택하였다.
-
-index.html 파일을 수정하여 사용자 정의 웹 페이지 생성
-
-nginx 기본 페이지를 커스텀 페이지로 대체
-
-<img width="1541" height="881" alt="커스텀 이미지 변경 전 후" src="https://github.com/user-attachments/assets/3140b74e-7be3-4433-bfe8-a5b7e66ff9a9" />
 
 10. 🌐 포트 매핑 및 접속
-<img width="1541" height="881" alt="포트매핑 접속증거2" src="https://github.com/user-attachments/assets/2561ff71-8ca3-4b87-bb25-5424b72b48ff" />
-<img width="1541" height="881" alt="포트매핑 접속증거" src="https://github.com/user-attachments/assets/2dffe772-58b5-4645-9da7-8bc54cdf9cc0" 
+
+docker run -d -p 8080:80 nginx
+
+
+
   
 11. 🔗 바인드 마운트 검증
-<img width="1541" height="881" alt="바인드 마운트 결과" src="https://github.com/user-attachments/assets/dfe6bf28-3468-4b01-a987-b8b7468ac6d2" />
+
+herebattle6145@c5r9s1 CODY_E1-1 % mkdir bind-test
+
+herebattle6145@c5r9s1 CODY_E1-1 % cd bind-test
+
+herebattle6145@c5r9s1 bind-test % echo "hello" >test.txt
+
+erebattle6145@c5r9s1 bind-test %  docker run -it -v $(pwd):/app ubuntu bash 
+
+root@fd0c47a6789d:/# ls /app
+
+test.txt
+
+root@fd0c47a6789d:/# cat /app/test.txt
+
+hello
+
+root@fd0c47a6789d:/# echo "hello from container" > /app/test.txt
+
+root@fd0c47a6789d:/# exit
+
+exit
+
+herebattle6145@c5r9s1 bind-test % cat test.txt
+
+hello from container
+
+<img width="1276" height="79" alt="Screenshot 2026-04-15 at 9 52 00 PM" src="https://github.com/user-attachments/assets/88eaa317-5744-4dc1-8cc8-e6f19da86bc4" />
+
+
+<img width="1275" height="247" alt="Screenshot 2026-04-15 at 9 52 51 PM" src="https://github.com/user-attachments/assets/c4ca3419-5bba-4963-8aeb-2db94e3499f0" />
+
 
 12. 💾 Docker 볼륨 영속성 검증
-docker volume create my-volume
 
-docker run -d -v my-volume:/data --name vol-test ubuntu
+<img width="1276" height="225" alt="Screenshot 2026-04-15 at 10 05 16 PM" src="https://github.com/user-attachments/assets/46c51d79-ba7f-498b-9628-2ba6a17b23ec" />
 
-docker exec vol-test bash -c "echo hello > /data/test.txt"
 
-docker rm -f vol-test
+<img width="1286" height="269" alt="Screenshot 2026-04-15 at 10 04 43 PM" src="https://github.com/user-attachments/assets/7c2e1351-7c83-4f17-8ca0-b0e1be7e7023" />
 
-docker run -d -v my-volume:/data --name vol-test2 ubuntu
 
-docker exec vol-test2 cat /data/test.txt
 ✔️ 결과
 컨테이너 삭제 후에도 데이터 유지 확인
-<img width="1541" height="881" alt="증명docker 볼륨 및 영속성 검" src="https://github.com/user-attachments/assets/167b18c9-27ff-472d-a04a-b9d6bf9f18a0" />
+
 
 13. 🔧 Git 설정 및 GitHub 연동
 
