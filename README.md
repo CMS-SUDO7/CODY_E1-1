@@ -193,15 +193,7 @@ git init
 
 git add .
 
-git commit -m "first commit"
 
-https://github.com/CMS-SUDO7/my-nginx.git
-
-git remote add origin https://github.com/CMS-SUDo7/my-nginx.git
-
-git push -u origin main
-
-<img width="1541" height="881" alt="github 연동" src="https://github.com/user-attachments/assets/ecbcddfe-44db-46ff-bfb6-03578cd14586" />
 
 ### ⚠️트러블슈팅 (커스텀 이미지 적용 실패 문제)
 
