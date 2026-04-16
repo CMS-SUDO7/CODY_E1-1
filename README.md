@@ -24,6 +24,16 @@
 - [x] 볼륨 영속성
 - [x] Git 설정 + VSCode GitHub 연동
 
+## 3)파일 구조
+```
+.
+├── html/
+│   └── index.html        # 웹 페이지 파일
+├── practice/
+│   └── Dockerfile        # Docker 이미지 빌드용 파일
+├── Dockerfile            # 루트 Dockerfile (전체 환경용)
+└── README.md             # 프로젝트 설명 문서
+```
 4. 💻 터미널 조작 로그
 
 herebattle6145@c5r9s1 CODY_E1-1 % pwd 
@@ -123,7 +133,15 @@ exit
 <img width="1264" height="193" alt="Screenshot 2026-04-15 at 9 20 15 PM" src="https://github.com/user-attachments/assets/f2d6721c-cc4d-4091-949c-0264abf2807a" />
 
 
-9. 🏗️ 커스텀 이미지 제작
+9. 🌐 포트 매핑 및 접속
+
+docker run -d -p 8080:80 nginx
+
+<img width="871" height="53" alt="Screenshot 2026-04-15 at 10 58 15 PM" src="https://github.com/user-attachments/assets/0e71a6cb-e2c6-4cf4-80f6-5ca5e1f232b3" />
+
+<img width="694" height="416" alt="Screenshot 2026-04-15 at 10 58 09 PM" src="https://github.com/user-attachments/assets/5de40d9a-651d-4767-a90e-e381178ba575" />
+
+10. 🏗️ 커스텀 이미지 제작
 
 docker build -t my-nginx .
 
@@ -138,16 +156,6 @@ http://localhost:8080
 <img width="577" height="172" alt="Screenshot 2026-04-15 at 10 51 16 PM" src="https://github.com/user-attachments/assets/42c28bb6-df54-453e-9512-ed1ab2d1157b" />
 
 
-10. 🌐 포트 매핑 및 접속
-
-docker run -d -p 8080:80 nginx
-
-<img width="871" height="53" alt="Screenshot 2026-04-15 at 10 58 15 PM" src="https://github.com/user-attachments/assets/0e71a6cb-e2c6-4cf4-80f6-5ca5e1f232b3" />
-
-<img width="694" height="416" alt="Screenshot 2026-04-15 at 10 58 09 PM" src="https://github.com/user-attachments/assets/5de40d9a-651d-4767-a90e-e381178ba575" />
-
-
-  
 11. 🔗 바인드 마운트 검증
 
 herebattle6145@c5r9s1 CODY_E1-1 % mkdir bind-test
