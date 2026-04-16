@@ -224,7 +224,7 @@ git add .
 <img width="534" height="270" alt="Screenshot 2026-04-15 at 10 35 19 PM" src="https://github.com/user-attachments/assets/38f8490f-4c78-48c2-b67b-e317c3d78bf2" />
 
 
-### attach vs exec의 차이
+### 🔥attach vs exec의 차이
 
 | 항목   | attach                | exec                |
 |:------ |:--------------------:| ------------------:|
